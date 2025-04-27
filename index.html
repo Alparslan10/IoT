@@ -35,13 +35,23 @@
 
   <script>
     // MQTT Ayarları
-    const broker = 'wss://broker.hivemq.com:8884/mqtt'; // WebSocket MQTT bağlantısı
+    const broker = 'wss://192.168.195.222:8883/mqtt'; // Bilgisayar IP'si + SSL portu
     const topic = 'esp32/lamba';
 
-    const client = mqtt.connect(broker);
+    const options = {
+      username: '', // Gerekirse kullanıcı adı (şu an boş)
+      password: '', // Gerekirse şifre (şu an boş)
+      rejectUnauthorized: false // Sertifika kendi imzalı olduğu için güven hatasını görmezden gel
+    };
+
+    const client = mqtt.connect(broker, options);
 
     client.on('connect', function () {
-      console.log('MQTT Bağlandı');
+      console.log('MQTT Bağlandı!');
+    });
+
+    client.on('error', function (err) {
+      console.error('MQTT Hatası:', err);
     });
 
     function turnOn() {
