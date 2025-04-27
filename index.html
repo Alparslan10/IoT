@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ESP32 Lamba Kontrol</title>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    button {
+      padding: 15px 30px;
+      margin: 20px;
+      font-size: 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      color: white;
+    }
+    .on {
+      background-color: green;
+    }
+    .off {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>ESP32 Lamba Kontrol</h1>
+
+  <button class="on" onclick="turnOn()">Lambayı Aç</button>
+  <button class="off" onclick="turnOff()">Lambayı Kapat</button>
+
+  <script>
+    // MQTT Ayarları
+    const broker = 'wss://broker.hivemq.com:8884/mqtt'; // WebSocket MQTT bağlantısı
+    const topic = 'esp32/lamba';
+
+    const client = mqtt.connect(broker);
+
+    client.on('connect', function () {
+      console.log('MQTT Bağlandı');
+    });
+
+    function turnOn() {
+      client.publish(topic, 'ac');
+    }
+
+    function turnOff() {
+      client.publish(topic, 'kapat');
+    }
+  </script>
+</body>
+</html>
