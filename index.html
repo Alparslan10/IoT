@@ -1,65 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>ESP32 Lamba Kontrol</title>
-  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 100px;
-    }
-    button {
-      padding: 15px 30px;
-      margin: 20px;
-      font-size: 20px;
-      cursor: pointer;
-      border: none;
-      border-radius: 10px;
-      color: white;
-    }
-    .on {
-      background-color: green;
-    }
-    .off {
-      background-color: red;
-    }
-  </style>
+  <meta charset="utf-8">
+  <title>ESP32 LED Kontrol</title>
 </head>
 <body>
-  <h1>ESP32 Lamba Kontrol</h1>
+  <h1>LED Kontrol Paneli</h1>
+  <button onclick="toggleLED()">LED Aç/Kapat</button>
+  <p>LED Durumu: <span id="ledStatus">Bilinmiyor</span></p>
 
-  <button class="on" onclick="turnOn()">Lambayı Aç</button>
-  <button class="off" onclick="turnOff()">Lambayı Kapat</button>
-
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <script>
-    // MQTT Ayarları
-    const broker = 'wss://192.168.195.222:8883/mqtt'; // Bilgisayar IP'si + SSL portu
-    const topic = 'esp32/lamba';
-
     const options = {
-      username: '', // Gerekirse kullanıcı adı (şu an boş)
-      password: '', // Gerekirse şifre (şu an boş)
-      rejectUnauthorized: false // Sertifika kendi imzalı olduğu için güven hatasını görmezden gel
+      protocol: "wss",
+      hostname: "192.168.195.222",
+      port: 9002,
+      path: "/mqtt",
+      rejectUnauthorized: false // self-signed sertifika için
     };
 
-    const client = mqtt.connect(broker, options);
+    const client = mqtt.connect(options);
 
     client.on('connect', function () {
-      console.log('MQTT Bağlandı!');
+      console.log("Bağlandı!");
+      client.subscribe("esp32/led/state");
     });
 
-    client.on('error', function (err) {
-      console.error('MQTT Hatası:', err);
+    client.on('message', function (topic, message) {
+      if (topic === "esp32/led/state") {
+        document.getElementById("ledStatus").innerText = message.toString();
+      }
     });
 
-    function turnOn() {
-      client.publish(topic, 'ac');
-    }
-
-    function turnOff() {
-      client.publish(topic, 'kapat');
+    function toggleLED() {
+      client.publish("esp32/led/control", "toggle");
     }
   </script>
 </body>
