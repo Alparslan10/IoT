@@ -1,91 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ESP32 LED Kontrol</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 50px;
-    }
-
-    h1 {
-      margin-bottom: 30px;
-    }
-
-    #ledStatus {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 40px;
-      display: block;
-    }
-
-    .button-container {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-    }
-
-    .button {
-      padding: 15px 30px;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .on {
-      background-color: #28a745;
-      color: white;
-    }
-
-    .off {
-      background-color: #dc3545;
-      color: white;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css"> <!-- CSS dosyasını dahil et -->
 </head>
 <body>
   <h1>ESP32 LED Kontrol Paneli</h1>
-  <span id="ledStatus">LED Durumu: Bilinmiyor</span>
-
+  <div id="ledStatus">LED Durumu: Bilinmiyor</div>
   <div class="button-container">
     <button class="button on" onclick="setLED('on')">Lamba Aç</button>
     <button class="button off" onclick="setLED('off')">Lamba Kapat</button>
   </div>
 
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-  <script>
-    const options = {
-      protocol: "wss",
-      hostname: "192.168.195.222", // Değiştirmen gerekirse burayı düzenle
-      port: 9002,
-      path: "/mqtt",
-      rejectUnauthorized: false
-    };
-
-    const client = mqtt.connect(options);
-
-    const statusElement = document.getElementById("ledStatus");
-
-    client.on('connect', function () {
-      console.log("MQTT bağlantısı başarılı");
-      client.subscribe("esp32/led/state");
-    });
-
-    client.on('message', function (topic, message) {
-      if (topic === "esp32/led/state") {
-        const state = message.toString();
-        statusElement.textContent = "LED Durumu: " + (state === "on" ? "Açık" : "Kapalı");
-      }
-    });
-
-    function setLED(state) {
-      client.publish("esp32/led/control", state);
-      statusElement.textContent = "LED Durumu: " + (state === "on" ? "Açık" : "Kapalı");
-    }
-  </script>
+  <script src="script.js"></script> <!-- JavaScript dosyasını dahil et -->
 </body>
 </html>
