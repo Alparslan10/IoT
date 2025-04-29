@@ -1,0 +1,41 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding-top: 50px;
+}
+
+h1 {
+  margin-bottom: 30px;
+}
+
+#ledStatus {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  display: block;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.button {
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.on {
+  background-color: #28a745;
+  color: white;
+}
+
+.off {
+  background-color: #dc3545;
+  color: white;
+}
