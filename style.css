@@ -1,41 +1,32 @@
 body {
   font-family: Arial, sans-serif;
+  background-color: #f0f4f8;
   text-align: center;
-  padding-top: 50px;
+  padding: 50px;
 }
 
-h1 {
-  margin-bottom: 30px;
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  display: inline-block;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-#ledStatus {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 40px;
-  display: block;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-}
-
-.button {
+button {
   padding: 15px 30px;
   font-size: 18px;
-  font-weight: bold;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  background-color: #007bff;
+  color: white;
   cursor: pointer;
 }
 
-.on {
+button.on {
   background-color: #28a745;
-  color: white;
 }
 
-.off {
+button.off {
   background-color: #dc3545;
-  color: white;
 }
