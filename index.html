@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <title>ESP32 LED Kontrol</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LED Kontrol - MQTT</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>ESP32 LED KONTROL PANELİ</h1>
-    <button id="toggleBtn">LED Durumu: <span id="ledState">Bilinmiyor</span></button>
+    <h1>ESP32 LED Kontrolü</h1>
+    <div id="status">
+      <p>LED Durumu: <span id="ledStatus">Kapalı</span></p>
+    </div>
+    <div class="buttons">
+      <button onclick="setLED('on')">LED Aç</button>
+      <button onclick="setLED('off')">LED Kapat</button>
+    </div>
   </div>
-
-  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
